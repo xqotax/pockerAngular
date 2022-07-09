@@ -1,0 +1,104 @@
+<img src="../assets/media/pokerTable.jpg" alt="" id="backgroungImg">
+
+<button class="button-64" role="button" id="toStart" (click)="backToStart()"><span class="text">Back to start</span></button>
+<div class="container-xxl custom-container" >
+    <div *ngIf="gameCreated==true && game!=null" class="row text-decoration sub-container">
+        <div class="col-md-3">
+            <div *ngFor="let round of game.rounds; let i = index;">
+                <div *ngIf="game.round >= i+1"><div class="row " [className]="(i + 1) % game.players.length == 0 ? 'height-52' : 'height-42'"></div></div>
+            </div>
+            <div class="row">
+                <div class="fill-background">
+                    Раунд: <span style="color:red; padding-left: 5px;">{{game.rounds[game.round]}}</span>
+                </div>
+            </div>
+            <div *ngFor="let playerInGame of game.players; trackBy:trackByFn2">
+                <div class="row">
+                    <div class="col-md-6 relative-height padding-class">
+                        <div class="fill-background">
+                            <div style="width: 90%;">
+                                {{playerInGame.name}}:
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 relative-height padding-class">
+                        <input [(ngModel)]="playerInGame.order" class="relative" style="background-color: black">
+                    </div>
+                    <div class="col-md-3 relative-height padding-class">
+                        <input [(ngModel)]="playerInGame.capture" class="relative" style="background-color: black">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6"><button  class="relative button-28" role="button" (click)="deleteRound()" [disabled]="buttonClicked"> Delete </button></div>
+                <div class="col-md-6">
+                    <button *ngIf="game.round < (game.rounds.length - 1)" class="relative button-28" role="button" (click)="calculateRound()" [disabled]="buttonClicked"> Calculate </button>
+                    <button *ngIf="game.round == (game.rounds.length - 1)" class="relative button-28" role="button" (click)="finishGame()" [disabled]="buttonClicked"> Finish </button>
+                </div>
+            </div>
+            <div class="row height-42"></div>
+            <div class="row height-42"></div>
+            <div class="row height-42"></div>
+            <div class="row height-42"></div>
+        </div>
+        <div class="col-md-8">
+            <div class="row header-row">
+                <div class="col-md-2"></div>
+                <div *ngFor="let playerInGame of game.players;">
+                    <div class="col-md-3 playersInput">
+                        <span class="text-center">
+                            {{playerInGame.name}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let round of game.rounds; let i = index;">
+                <div *ngIf="game.round >= i+1">
+                    <div class="row header-row" [style.marginBottom.px]="(i + 1) % game.players.length == 0 ? '10' : '0'">
+                        <div class="col-md-2"><span class="pull-right">{{round}}</span></div>
+                        <div *ngFor="let playerInGame of game.players;">
+                                <div class="col-md-3 playersInput">
+                                    <span class="text-center">
+                                        {{playerInGame.points[i+1]}}
+                                    </span>
+                                    <span *ngIf="playerInGame.grows[i] == true" style="color:green">&#x25B2;</span>
+                                    <span *ngIf="playerInGame.grows[i] == false" style="color:red">&#x25BC;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="gameCreated==false" class="row text-decoration playersInput"  style="height:40px">
+        <div class="col-md-3 relative-height">Input count of players:</div>
+        <div class="col-md-1 relative-height"><input value="3" [(ngModel)]="playersCountString" class="relative" style="background-color: black"></div>
+        <div class="col-md-2 relative-height"><button id="startProgram" class="relative button-28" role="button" (click)="createGame()"> Start </button></div>
+    </div>
+    <div *ngIf="gameCreated==true && game==null" class="row text-decoration playersInput" style="height:40px">
+        <div class="col-md-6 relative-height">
+            <div class="row">
+                <div class="col-md-6 relative-height">Input names</div>
+                <div class="col-md-6 relative-height">
+                    <button id="startGame" class="relative button-28" role="button" (click)="startGame()"> Start Game </button>
+                </div>
+            <div *ngFor="let player of players; let i = index; trackBy:trackByFn">
+                <div class="row">
+                    <div class="col-md-6 relative-height">{{constWords[i]}} player:</div>
+                    <div class="col-md-6 relative-height">
+                        <input [(ngModel)]="players[i]" class="relative" style="background-color: black">
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+    
+
+    <div *ngIf="gameStarted==null" class="row">
+        <div class="col-md-12">
+            <h1>I am a col , that spans the entire 12 coloumbs that this row had to offer , by now you should know that
+                if you want to create another coloumb , you have to go create another "row" class</h1>
+        </div>
+    </div>
+</div>
