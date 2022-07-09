@@ -6,11 +6,10 @@
   },
   
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "node --max_old_space_size=2560 node_modules/.bin/react-scripts start",
+    "build": "node --max_old_space_size=2560 node_modules/.bin/react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "private": true,
   "dependencies": {
